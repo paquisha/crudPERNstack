@@ -46,8 +46,19 @@ const putTask = (req, res) => {
     res.send('actualizando sola');
 }
 
-const deleteTask = (req, res) => {
-    res.send('borrando sola');
+const deleteTask = async(req, res) => {
+    const { id } = req.params
+
+    try{
+        const deleteById = await pool.query('DELETE FROM task WHERE id = $1', [ id ])
+
+        if(deleteById.rowCount === 0) return res.status(404).json({
+            message: "Task not found",
+        });
+        res.sendStatus(204)
+    }catch(error){
+        res.json({ error: error.message })
+    }
 }
 
 
