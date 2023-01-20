@@ -1,14 +1,29 @@
-const express = require('express');
-const morgan = require('morgan');
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const router = require("./routes/tasks.routes");
 
-const taskRoutes = require('./routes/tasks.routes');
 const app = express();
 
+// Settings
+app.set("port", process.env.PORT || 4000);
 
-app.use(morgan('dev'));
-app.use(express.json())
+// Middlewares
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use(taskRoutes)
+// Routes
+app.use(router);
 
-app.listen(3000)
-console.log('server on port 3000')
+// handling errors
+app.use((err, req, res, next) => {
+  return res.status(500).json({
+    status: "error",
+    message: err.message,
+  });
+});
+
+app.listen(app.get("port"));
+console.log("Server on port", app.get("port"));
