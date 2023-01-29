@@ -2,11 +2,11 @@ const pool = require("../db");
 
 const createTask = async (req, res, next) => {
   try {
-    const { title, description } = req.body;
+    const { title, descripcion, fecha } = req.body;
 
     const newTask = await pool.query(
-      "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
-      [title, description]
+      "INSERT INTO task (title, descripcion, fecha) VALUES($1, $2, $3) RETURNING *",
+      [title, descripcion, fecha]
     );
 
     res.json(newTask.rows[0]);
