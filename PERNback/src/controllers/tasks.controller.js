@@ -30,7 +30,7 @@ const getTask = async (req, res) => {
     const result = await pool.query("SELECT * FROM task WHERE id = $1", [id]);
 
     if (result.rows.length === 0)
-      return res.status(404).json({ message: "Task not found" });
+      return res.status(404).json({ message: "Task not found" });//si profe siempre respondo en ingles, ya nada es la costumbre
 
     res.json(result.rows[0]);
   } catch (error) {
@@ -41,11 +41,11 @@ const getTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description } = req.body;
+    const { title, descripcion, fecha } = req.body;
 
     const result = await pool.query(
-      "UPDATE task SET title = $1, description = $2 WHERE id = $3 RETURNING *",
-      [title, description, id]
+      "UPDATE task SET title = $1, descripcion = $2, fecha = $3  WHERE id = $4 RETURNING *",
+      [title, descripcion, fecha, id]
     );
 
     if (result.rows.length === 0)
