@@ -18,7 +18,7 @@ export default function ButtonAppBar() {
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link to="/" style={{ textDecoration: "none", color: '#eee'}}>
-                UTM
+                UTM | Andres Grijalva Pincay
               </Link>
             </Typography>
             <Button
